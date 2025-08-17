@@ -18,8 +18,7 @@ import one.digitalinnovation.gof.service.ClienteService;
  * Esse {@link RestController} representa nossa <b>Facade</b>, pois abstrai toda
  * a complexidade de integrações (Banco de Dados H2 e API do ViaCEP) em uma
  * interface simples e coesa (API REST).
- * 
- * @author falvojr
+ * * @author falvojr
  */
 @RestController
 @RequestMapping("clientes")
@@ -35,7 +34,11 @@ public class ClienteRestController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(clienteService.buscarPorId(id));
+		Cliente cliente = clienteService.buscarPorId(id);
+		if (cliente == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(cliente);
 	}
 
 	@PostMapping
